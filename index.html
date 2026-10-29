@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Portfolio de Fany — création de contenu audiovisuel, communication digitale et design.">
+  <title>Fany — Portfolio créatif</title>
+  <style>
+    /* =========================================================
+       PERSONNALISATION RAPIDE
+       Change les couleurs ci-dessous pour modifier tout le site.
+       ========================================================= */
+    :root {
+      --bg: #111116;
+      --bg-soft: #19191f;
+      --panel: #202027;
+      --text: #f5f3f8;
+      --muted: #b4b0bf;
+      --accent: #9a72f5;
+      --accent-light: #c0a8ff;
+      --cream: #f3f0ea;
+      --ink: #24232a;
+      --line: rgba(255,255,255,.12);
+      --radius: 18px;
+      --max-width: 1180px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 90px; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.6;
+    }
+    img { display: block; width: 100%; object-fit: cover; }
+    a { color: inherit; text-decoration: none; }
+    button, input, textarea, select { font: inherit; }
+    button, a { -webkit-tap-highlight-color: transparent; }
+    .container { width: min(var(--max-width), calc(100% - 48px)); margin-inline: auto; }
+    .eyebrow {
+      color: var(--accent-light); text-transform: uppercase; letter-spacing: .16em;
+      font-size: .76rem; font-weight: 800;
+    }
+    .muted { color: var(--muted); }
+    .section { padding: 100px 0; }
+    .section-heading { display: flex; justify-content: space-between; gap: 30px; align-items: end; margin-bottom: 36px; }
+    h1, h2, h3, p { margin-top: 0; }
+    h1, h2, h3 { line-height: 1.08; letter-spacing: -.04em; }
+    h1 { font-size: clamp(3rem, 7.5vw, 6.8rem); max-width: 900px; margin-bottom: 24px; }
+    h2 { font-size: clamp(2.2rem, 5vw, 4rem); margin-bottom: 14px; }
+    h3 { font-size: 1.35rem; margin-bottom: 10px; }
+    p { color: var(--muted); }
+    .accent { color: var(--accent-light); }
+    .button {
+      display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+      padding: 13px 19px; border-radius: 999px; border: 1px solid transparent;
+      background: var(--accent); color: white; font-weight: 750; cursor: pointer;
+      transition: transform .2s ease, background .2s ease, border-color .2s ease;
+    }
+    .button:hover { transform: translateY(-2px); background: #8055e8; }
+    .button.secondary { background: transparent; border-color: var(--line); }
+    .button.secondary:hover { border-color: var(--accent-light); background: rgba(154,114,245,.1); }
+    .text-link { color: var(--accent-light); font-weight: 750; }
+    .text-link:hover { text-decoration: underline; text-underline-offset: 4px; }
+
+    /* Navigation */
+    .site-header {
+      position: sticky; top: 0; z-index: 50; background: rgba(17,17,22,.88);
+      backdrop-filter: blur(16px); border-bottom: 1px solid var(--line);
+    }
+    .nav { min-height: 76px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+    .brand { font-size: 1.55rem; font-weight: 900; letter-spacing: -.07em; }
+    .brand span { color: var(--accent-light); }
+    .nav-links { display: flex; align-items: center; gap: 25px; font-size: .92rem; color: #ddd9e5; }
+    .nav-links a:hover { color: var(--accent-light); }
+    .menu-toggle { display: none; border: 1px solid var(--line); background: transparent; color: white; border-radius: 10px; padding: 8px 11px; }
+
+    /* Hero */
+    .hero { min-height: 690px; display: grid; align-items: center; position: relative; overflow: hidden; }
+    .hero::before {
+      content: ""; position: absolute; width: 520px; height: 520px; right: -130px; top: 30px;
+      background: radial-gradient(circle, rgba(137,91,235,.22), transparent 68%); pointer-events: none;
+    }
+    .hero-grid { display: grid; grid-template-columns: 1.05fr .95fr; align-items: center; gap: 54px; padding: 80px 0; }
+    .hero-copy { position: relative; z-index: 2; }
+    .hero-copy .intro { max-width: 610px; font-size: 1.12rem; margin-bottom: 28px; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+    .hero-visual { min-height: 480px; position: relative; }
+    .hero-image {
+      height: 480px; border-radius: 28px; overflow: hidden; border: 1px solid rgba(255,255,255,.18);
+      background: #2b2635; position: absolute; inset: 0 0 0 24px;
+    }
+    .hero-image img { height: 100%; filter: saturate(.88); }
+    .hero-image::after { content: ""; position: absolute; inset: 0; background: linear-gradient(0deg, rgba(10,10,14,.68), transparent 55%); }
+    .hero-caption { position: absolute; bottom: 24px; left: 48px; z-index: 2; }
+    .hero-caption strong { display: block; font-size: 1.1rem; }
+    .hero-caption span { color: #e3dced; font-size: .9rem; }
+    .floating-tag {
+      position: absolute; z-index: 3; top: 35px; left: 0; background: var(--cream); color: var(--ink);
+      padding: 13px 17px; border-radius: 12px; font-size: .83rem; font-weight: 800; box-shadow: 0 15px 40px #0005;
+    }
+    .scroll-note { margin-top: 54px; color: var(--muted); font-size: .8rem; letter-spacing: .12em; text-transform: uppercase; }
+
+    /* Ticker */
+    .ticker { border-block: 1px solid var(--line); overflow: hidden; }
+    .ticker-inner { display: flex; gap: 42px; align-items: center; justify-content: center; flex-wrap: wrap; padding: 20px 0; color: #d5d0df; font-size: .84rem; font-weight: 750; text-transform: uppercase; letter-spacing: .1em; }
+    .ticker-inner span::before { content: "✳"; color: var(--accent-light); margin-right: 12px; }
+
+    /* Projects */
+    .project-filters { display: flex; flex-wrap: wrap; gap: 9px; margin-bottom: 28px; }
+    .filter-btn { border: 1px solid var(--line); background: transparent; color: var(--muted); border-radius: 999px; padding: 9px 15px; cursor: pointer; }
+    .filter-btn.active, .filter-btn:hover { color: white; background: rgba(154,114,245,.16); border-color: var(--accent); }
+    .project-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 30px; }
+    .project-card { min-width: 0; }
+    .project-thumb { aspect-ratio: 16 / 10; border-radius: var(--radius); overflow: hidden; position: relative; background: var(--panel); }
+    .project-thumb img { height: 100%; transition: transform .45s ease; }
+    .project-card:hover .project-thumb img { transform: scale(1.045); }
+    .project-thumb::after { content: ""; position: absolute; inset: 40% 0 0; background: linear-gradient(transparent, rgba(0,0,0,.4)); pointer-events: none; }
+    .project-type { display: inline-block; margin-top: 17px; margin-bottom: 8px; color: var(--accent-light); font-size: .76rem; font-weight: 800; text-transform: uppercase; letter-spacing: .1em; }
+    .project-meta { display: flex; align-items: start; justify-content: space-between; gap: 18px; }
+    .project-meta p { margin-bottom: 0; max-width: 470px; }
+    .project-open { border: 1px solid var(--line); border-radius: 50%; width: 42px; height: 42px; flex: 0 0 42px; display: grid; place-items: center; color: var(--accent-light); font-size: 1.2rem; }
+    .project-card[hidden] { display: none; }
+    .project-note { border-left: 2px solid var(--accent); padding: 12px 0 12px 17px; margin-top: 30px; max-width: 720px; }
+
+    /* About */
+    .about-section { background: var(--cream); color: var(--ink); }
+    .about-section p { color: #5f5a65; }
+    .about-grid { display: grid; grid-template-columns: .85fr 1.15fr; gap: 70px; align-items: center; }
+    .about-photo { aspect-ratio: 4 / 5; border-radius: 24px; overflow: hidden; position: relative; background: #d9d1df; }
+    .about-photo img { height: 100%; }
+    .about-stamp { position: absolute; bottom: 18px; right: -12px; background: var(--accent); color: white; border-radius: 14px; padding: 16px 19px; font-weight: 850; transform: rotate(-3deg); }
+    .about-section .eyebrow { color: #6b43bf; }
+    .about-section h2 { color: var(--ink); }
+    .about-points { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; margin-top: 28px; }
+    .about-point { border-top: 1px solid #d4ced9; padding-top: 14px; }
+    .about-point strong { display: block; font-size: .95rem; }
+    .about-point span { color: #696371; font-size: .82rem; }
+
+    /* Skills and experience */
+    .skills-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .skill-panel { background: var(--bg-soft); border: 1px solid var(--line); border-radius: var(--radius); padding: 25px; }
+    .skill-panel .icon { color: var(--accent-light); font-size: 1.5rem; margin-bottom: 18px; }
+    .skill-panel ul { list-style: none; padding: 0; margin: 18px 0 0; }
+    .skill-panel li { padding: 9px 0; border-bottom: 1px solid var(--line); color: #d7d3df; font-size: .93rem; }
+    .skill-panel li:last-child { border-bottom: 0; }
+    .experience { margin-top: 42px; border-top: 1px solid var(--line); padding-top: 30px; display: grid; grid-template-columns: .65fr 1.35fr; gap: 40px; }
+    .timeline-item { border-left: 2px solid var(--accent); padding: 0 0 22px 20px; }
+    .timeline-item:last-child { padding-bottom: 0; }
+    .timeline-item strong { display: block; }
+    .timeline-item small { color: var(--accent-light); display: block; margin: 5px 0 8px; }
+
+    /* CTA / contact */
+    .contact-section { padding: 90px 0; background: #19151f; }
+    .contact-box { border: 1px solid rgba(192,168,255,.25); border-radius: 28px; padding: clamp(28px, 6vw, 65px); background: radial-gradient(circle at 90% 0%, rgba(137,91,235,.18), transparent 38%), #1d1a25; }
+    .contact-grid { display: grid; grid-template-columns: 1fr .8fr; gap: 60px; align-items: start; }
+    .contact-form { display: grid; gap: 13px; }
+    .contact-form label { display: block; color: #ded9e8; font-size: .84rem; margin-bottom: 6px; }
+    .contact-form input, .contact-form textarea {
+      width: 100%; background: #111116; border: 1px solid var(--line); border-radius: 10px; padding: 13px 14px; color: white; outline: none;
+    }
+    .contact-form input:focus, .contact-form textarea:focus { border-color: var(--accent-light); }
+    .contact-form textarea { min-height: 125px; resize: vertical; }
+    .contact-info { padding-top: 15px; }
+    .contact-info a { display: block; margin: 13px 0; color: var(--accent-light); }
+    .form-note { font-size: .82rem; margin: 0; }
+
+    footer { padding: 25px 0; border-top: 1px solid var(--line); color: var(--muted); font-size: .84rem; }
+    .footer-inner { display: flex; justify-content: space-between; gap: 18px; flex-wrap: wrap; }
+    .back-top { color: var(--accent-light); }
+
+    /* Project detail modal */
+    .modal { position: fixed; inset: 0; z-index: 100; display: none; place-items: center; padding: 20px; background: rgba(5,5,8,.82); backdrop-filter: blur(8px); }
+    .modal.open { display: grid; }
+    .modal-content { width: min(760px, 100%); max-height: 90vh; overflow: auto; background: var(--bg-soft); border: 1px solid var(--line); border-radius: 20px; padding: 25px; position: relative; }
+    .modal-content img { aspect-ratio: 16/8; border-radius: 12px; margin-bottom: 20px; }
+    .modal-close { position: absolute; top: 15px; right: 15px; border: 0; background: #111116; color: white; width: 38px; height: 38px; border-radius: 50%; cursor: pointer; font-size: 1.25rem; }
+    .modal-content h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); padding-right: 38px; }
+
+    @media (max-width: 850px) {
+      .hero-grid, .about-grid, .contact-grid { grid-template-columns: 1fr; }
+      .hero { min-height: auto; }
+      .hero-grid { padding: 70px 0 60px; gap: 36px; }
+      .hero-visual { min-height: 390px; }
+      .hero-image { height: 390px; }
+      .about-grid { gap: 35px; }
+      .about-photo { max-height: 520px; }
+      .skills-grid { grid-template-columns: 1fr 1fr; }
+      .experience { grid-template-columns: 1fr; gap: 20px; }
+      .contact-grid { gap: 25px; }
+    }
+    @media (max-width: 620px) {
+      .container { width: min(100% - 32px, var(--max-width)); }
+      .section { padding: 70px 0; }
+      .nav { min-height: 68px; }
+      .menu-toggle { display: block; }
+      .nav-links {
+        display: none; position: absolute; top: 68px; left: 0; right: 0; padding: 20px 24px 24px;
+        background: #17171c; border-bottom: 1px solid var(--line); flex-direction: column; align-items: stretch; gap: 17px;
+      }
+      .nav-links.open { display: flex; }
+      .nav-links .button { align-self: flex-start; }
+      .hero-grid { padding-top: 54px; }
+      .hero-visual { min-height: 320px; }
+      .hero-image { height: 320px; inset: 0; }
+      .floating-tag { left: 10px; top: 14px; }
+      .hero-caption { left: 20px; bottom: 18px; }
+      .scroll-note { margin-top: 32px; }
+      .section-heading { display: block; }
+      .project-grid, .skills-grid { grid-template-columns: 1fr; }
+      .about-points { grid-template-columns: 1fr; }
+      .about-point { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+      .contact-box { padding: 25px 19px; }
+      h1 { font-size: clamp(2.8rem, 14vw, 4.5rem); }
+    }
+  </style>
+</head>
+<body>
+  <!--
+    GUIDE :
+    1. Modifie les textes directement dans le HTML.
+    2. Remplace les URLs d'images par tes propres photos/miniatures.
+    3. Change les couleurs dans :root au début du CSS.
+    4. Pour ajouter un projet, duplique une carte .project-card.
+    5. Le formulaire de contact est visuel : branche-le à un service avant publication.
+  -->
+
+  <header class="site-header">
+    <div class="container nav">
+      <a class="brand" href="#accueil" aria-label="Fany, accueil">fany<span>.</span></a>
+      <button class="menu-toggle" id="menuToggle" aria-label="Ouvrir le menu" aria-expanded="false">☰</button>
+      <nav class="nav-links" id="navLinks" aria-label="Navigation principale">
+        <a href="#accueil">Accueil</a>
+        <a href="#projets">Projets</a>
+        <a href="#apropos">À propos</a>
+        <a href="#competences">Compétences</a>
+        <a href="#contact">Contact</a>
+        <!-- Remplace cv-fany.pdf par le nom du fichier de ton CV dans GitHub. -->
+        <a class="button" href="cv-fany.pdf" target="_blank" rel="noopener">Mon CV ↗</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="accueil">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <span class="eyebrow">Portfolio · Audiovisuel & communication</span>
+          <h1>Des idées aux images, <span class="accent">il n’y a qu’un pas.</span></h1>
+          <p class="intro">Moi, c’est Fany. Je crée des contenus visuels qui racontent des histoires, font vivre des émotions et mettent en lumière les projets qui m’inspirent.</p>
+          <div class="hero-actions">
+            <a class="button" href="#projets">Découvrir mes projets <span aria-hidden="true">↘</span></a>
+            <a class="button secondary" href="#contact">Me contacter</a>
+          </div>
+          <div class="scroll-note">↓ Faites défiler pour découvrir mon univers</div>
+        </div>
+        <div class="hero-visual">
+          <div class="floating-tag">Créativité · Image · Mouvement</div>
+          <div class="hero-image">
+            <!-- IMAGE HERO : remplace cette URL par une photo de ton teaser ou d'un tournage. -->
+            <img src="https://images.unsplash.com/photo-1502680390469-be75c86b636f?auto=format&fit=crop&w=1200&q=85" alt="Ambiance sportive au bord de l'eau">
+            <div class="hero-caption">
+              <strong>Raconter le sport autrement.</strong>
+              <span>Vidéo · Événementiel · Communication</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="ticker" aria-label="Domaines créatifs">
+      <div class="container ticker-inner">
+        <span>Audiovisuel</span><span>Montage vidéo</span><span>Motion design</span><span>Communication</span><span>Sport</span>
+      </div>
+    </div>
+
+    <section class="section" id="projets">
+      <div class="container">
+        <div class="section-heading">
+          <div>
+            <span class="eyebrow">Sélection de réalisations</span>
+            <h2>Des projets, <span class="accent">des histoires.</span></h2>
+            <p>Une sélection de projets réalisés dans le cadre de mon alternance et de ma formation.</p>
+          </div>
+          <a class="text-link" href="#contact">Un projet en tête ? ↗</a>
+        </div>
+
+        <div class="project-filters" role="group" aria-label="Filtrer les projets">
+          <button class="filter-btn active" data-filter="all">Tout voir</button>
+          <button class="filter-btn" data-filter="video">Audiovisuel</button>
+          <button class="filter-btn" data-filter="communication">Communication</button>
+          <button class="filter-btn" data-filter="graphisme">Graphisme</button>
+          <button class="filter-btn" data-filter="web">Web</button>
+        </div>
+
+        <div class="project-grid">
+          <article class="project-card" data-category="video">
+            <a href="#" class="project-open-trigger" data-project="cdm" aria-label="Découvrir le projet Coupe du Monde">
+              <div class="project-thumb">
+                <!-- Remplace par une miniature du teaser de la Coupe du Monde. -->
+                <img src="https://images.unsplash.com/photo-1530053969600-caed2596d242?auto=format&fit=crop&w=1000&q=85" alt="Eau vive et action sportive" loading="lazy">
+              </div>
+            </a>
+            <span class="project-type">Audiovisuel · 2026</span>
+            <div class="project-meta">
+              <div><h3>Coupe du Monde de kayak slalom</h3><p>Teaser vidéo, montage, sélection des rushes et motion design pour un événement sportif international.</p></div>
+              <a href="#" class="project-open project-open-trigger" data-project="cdm" aria-label="En savoir plus sur la Coupe du Monde">↗</a>
+            </div>
+          </article>
+
+          <article class="project-card" data-category="graphisme">
+            <a href="#" class="project-open-trigger" data-project="medailles" aria-label="Découvrir les portraits des médaillés">
+              <div class="project-thumb">
+                <img src="https://images.unsplash.com/photo-1530549387789-4c1017266635?auto=format&fit=crop&w=1000&q=85" alt="Ambiance de compétition sportive" loading="lazy">
+              </div>
+            </a>
+            <span class="project-type">Graphisme · 2025</span>
+            <div class="project-meta">
+              <div><h3>Les médaillés de l’année</h3><p>Une série d’environ 70 portraits graphiques pour mettre à l’honneur les athlètes.</p></div>
+              <a href="#" class="project-open project-open-trigger" data-project="medailles" aria-label="En savoir plus sur les portraits">↗</a>
+            </div>
+          </article>
+
+          <article class="project-card" data-category="video">
+            <a href="#" class="project-open-trigger" data-project="reportage" aria-label="Découvrir le projet reportage">
+              <div class="project-thumb">
+                <img src="https://images.unsplash.com/photo-1492619375914-88005aa9e8fb?auto=format&fit=crop&w=1000&q=85" alt="Caméra de tournage vidéo" loading="lazy">
+              </div>
+            </a>
+            <span class="project-type">Audiovisuel · Interview</span>
+            <div class="project-meta">
+              <div><h3>Reportage & interviews</h3><p>Sélection des séquences, construction narrative, rythme et montage pour donner vie aux témoignages.</p></div>
+              <a href="#" class="project-open project-open-trigger" data-project="reportage" aria-label="En savoir plus sur le reportage">↗</a>
+            </div>
+          </article>
+
+          <article class="project-card" data-category="communication">
+            <a href="#" class="project-open-trigger" data-project="handikayak" aria-label="Découvrir le projet Handikayak">
+              <div class="project-thumb">
+                <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1000&q=85" alt="Paysage de plein air" loading="lazy">
+              </div>
+            </a>
+            <span class="project-type">Communication · Accessibilité</span>
+            <div class="project-meta">
+              <div><h3>Communication Handikayak</h3><p>Création de kakémonos et supports destinés à différents publics et objectifs.</p></div>
+              <a href="#" class="project-open project-open-trigger" data-project="handikayak" aria-label="En savoir plus sur Handikayak">↗</a>
+            </div>
+          </article>
+
+          <article class="project-card" data-category="web">
+            <a href="#" class="project-open-trigger" data-project="wordpress" aria-label="Découvrir le projet WordPress">
+              <div class="project-thumb">
+                <img src="https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?auto=format&fit=crop&w=1000&q=85" alt="Interface web sur ordinateur" loading="lazy">
+              </div>
+            </a>
+            <span class="project-type">Web · WordPress</span>
+            <div class="project-meta">
+              <div><h3>Contenus web FFCK</h3><p>Création et actualisation de pages web autour des pratiques, des collectifs et des ressources fédérales.</p></div>
+              <a href="#" class="project-open project-open-trigger" data-project="wordpress" aria-label="En savoir plus sur les contenus web">↗</a>
+            </div>
+          </article>
+
+          <article class="project-card" data-category="graphisme">
+            <a href="#" class="project-open-trigger" data-project="motion" aria-label="Découvrir les animations graphiques">
+              <div class="project-thumb">
+                <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=1000&q=85" alt="Univers graphique et numérique" loading="lazy">
+              </div>
+            </a>
+            <span class="project-type">Motion design · Identité</span>
+            <div class="project-meta">
+              <div><h3>Animations graphiques</h3><p>Animation de logos et création d’éléments visuels pour enrichir les contenus audiovisuels.</p></div>
+              <a href="#" class="project-open project-open-trigger" data-project="motion" aria-label="En savoir plus sur les animations">↗</a>
+            </div>
+          </article>
+        </div>
+        <p class="project-note"><strong>À personnaliser :</strong> les images affichées sont des visuels de remplacement. Ajoute tes créations réelles, les liens vers tes vidéos et quelques captures de ton processus de travail.</p>
+      </div>
+    </section>
+
+    <section class="section about-section" id="apropos">
+      <div class="container about-grid">
+        <div class="about-photo">
+          <!-- Remplace par une photo de toi, un portrait professionnel ou une photo de tournage. -->
+          <img src="https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=1000&q=85" alt="Paysage naturel inspirant" loading="lazy">
+          <div class="about-stamp">Curieuse<br>et créative ✳</div>
+        </div>
+        <div>
+          <span class="eyebrow">Quelques mots sur moi</span>
+          <h2>Créer, raconter,<br><span class="accent">transmettre.</span></h2>
+          <p>Je m’appelle Fany et je suis en Bachelor Chef de Projet Digitaux, spécialité Marketing Digital & Communication, à Ynov.</p>
+          <p>Mon alternance à la Fédération Française de Canoë-Kayak me permet de mêler communication, création graphique et audiovisuel. J’aime imaginer des contenus qui valorisent les personnes, les projets et les émotions, avec une attention particulière au rythme et à l’image.</p>
+          <p>J’apprécie les projets où la créativité rencontre la technique, le travail d’équipe et le terrain.</p>
+          <div class="about-points">
+            <div class="about-point"><strong>Créer</strong><span>Images et contenus</span></div>
+            <div class="about-point"><strong>Raconter</strong><span>Vidéo et narration</span></div>
+            <div class="about-point"><strong>Partager</strong><span>Communication digitale</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="competences">
+      <div class="container">
+        <div class="section-heading">
+          <div><span class="eyebrow">Mon savoir-faire</span><h2>Créativité & <span class="accent">technique.</span></h2></div>
+          <p style="max-width:370px">Des compétences complémentaires pour accompagner un projet de l’idée à sa diffusion.</p>
+        </div>
+        <div class="skills-grid">
+          <div class="skill-panel">
+            <div class="icon" aria-hidden="true">▣</div><h3>Audiovisuel</h3>
+            <p>Donner du rythme et une intention aux images.</p>
+            <ul><li>Adobe Premiere Pro</li><li>Adobe After Effects</li><li>Montage vidéo</li><li>Motion design</li><li>Interviews et reportage</li></ul>
+          </div>
+          <div class="skill-panel">
+            <div class="icon" aria-hidden="true">✳</div><h3>Création graphique</h3>
+            <p>Créer des supports visuels cohérents et lisibles.</p>
+            <ul><li>Adobe Photoshop</li><li>Adobe Illustrator</li><li>Canva</li><li>Supports de communication</li><li>Contenus réseaux sociaux</li></ul>
+          </div>
+          <div class="skill-panel">
+            <div class="icon" aria-hidden="true">⌘</div><h3>Communication digitale</h3>
+            <p>Adapter les contenus aux objectifs et aux publics.</p>
+            <ul><li>WordPress</li><li>Réseaux sociaux</li><li>Gestion de projet</li><li>Communication événementielle</li><li>Travail en équipe</li></ul>
+          </div>
+        </div>
+
+        <div class="experience">
+          <div><span class="eyebrow">Mon parcours</span><h3>Formation & expérience</h3></div>
+          <div>
+            <div class="timeline-item">
+              <strong>Alternante en communication — FFCK</strong>
+              <small>Septembre 2025 – septembre 2027 (prévisionnel)</small>
+              <p>Participation à des projets audiovisuels, à la création de supports de communication, aux réseaux sociaux et à la mise à jour de contenus web.</p>
+            </div>
+            <div class="timeline-item">
+              <strong>Bachelor Chef de Projet Digitaux — Ynov</strong>
+              <small>Marketing Digital & Communication</small>
+              <p>Formation en communication digitale, création de contenu et gestion de projet.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="contact-section" id="contact">
+      <div class="container">
+        <div class="contact-box">
+          <div class="contact-grid">
+            <div>
+              <span class="eyebrow">Et maintenant ?</span>
+              <h2>On crée quelque chose <span class="accent">ensemble ?</span></h2>
+              <p>Une opportunité, un projet ou simplement envie d’échanger ? Je serais ravie d’en discuter.</p>
+              <div class="contact-info">
+                <!-- Remplace ces liens par tes vrais contacts. -->
+                <a href="mailto:ton.adresse@email.com">ton.adresse@email.com ↗</a>
+                <a href="https://www.linkedin.com/" target="_blank" rel="noopener">LinkedIn ↗</a>
+                <a href="https://www.instagram.com/" target="_blank" rel="noopener">Instagram ↗</a>
+              </div>
+            </div>
+            <form class="contact-form" id="contactForm">
+              <div><label for="name">Nom</label><input id="name" name="name" placeholder="Ton nom" required></div>
+              <div><label for="email">E-mail</label><input id="email" name="email" type="email" placeholder="nom@exemple.fr" required></div>
+              <div><label for="message">Message</label><textarea id="message" name="message" placeholder="Parlons de ton projet..." required></textarea></div>
+              <button class="button" type="submit">Préparer mon e-mail ↗</button>
+              <p class="form-note" id="formNote">Le formulaire ouvre ton application e-mail ; il n’envoie pas de données à un serveur.</p>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-inner">
+      <span>© <span id="year"></span> Fany — Portfolio créatif</span>
+      <span>Conçu avec créativité et ☕</span>
+      <a class="back-top" href="#accueil">Retour en haut ↑</a>
+    </div>
+  </footer>
+
+  <!-- Fenêtre de détail des projets : modifie les descriptions dans le script en bas de page. -->
+  <div class="modal" id="projectModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-content">
+      <button class="modal-close" id="modalClose" aria-label="Fermer">×</button>
+      <img id="modalImage" src="" alt="">
+      <span class="eyebrow" id="modalCategory"></span>
+      <h2 id="modalTitle"></h2>
+      <p id="modalDescription"></p>
+      <p id="modalTools" class="muted"></p>
+      <a id="modalLink" class="button" href="#contact">Parlons d’un projet similaire ↗</a>
+    </div>
+  </div>
+
+  <script>
+    // MENU MOBILE
+    const menuToggle = document.getElementById("menuToggle");
+    const navLinks = document.getElementById("navLinks");
+    menuToggle.addEventListener("click", () => {
+      const isOpen = navLinks.classList.toggle("open");
+      menuToggle.setAttribute("aria-expanded", String(isOpen));
+      menuToggle.textContent = isOpen ? "×" : "☰";
+    });
+    navLinks.querySelectorAll("a").forEach(link => {
+      link.addEventListener("click", () => {
+        navLinks.classList.remove("open");
+        menuToggle.setAttribute("aria-expanded", "false");
+        menuToggle.textContent = "☰";
+      });
+    });
+
+    // FILTRES DE PROJETS
+    const filterButtons = document.querySelectorAll(".filter-btn");
+    const projectCards = document.querySelectorAll(".project-card");
+    filterButtons.forEach(button => {
+      button.addEventListener("click", () => {
+        filterButtons.forEach(item => item.classList.remove("active"));
+        button.classList.add("active");
+        const filter = button.dataset.filter;
+        projectCards.forEach(card => {
+          card.hidden = filter !== "all" && card.dataset.category !== filter;
+        });
+      });
+    });
+
+    // CONTENU DES FICHES PROJETS — adapte les textes et ajoute les liens de tes vraies réalisations.
+    const projects = {
+      cdm: {
+        category: "Audiovisuel · Événementiel",
+        title: "Coupe du Monde de kayak slalom 2026",
+        image: "https://images.unsplash.com/photo-1530053969600-caed2596d242?auto=format&fit=crop&w=1200&q=85",
+        alt: "Eau vive et action sportive",
+        description: "Participation à la création du teaser de la Coupe du Monde de kayak slalom et kayak cross organisée à Vaires-sur-Marne. Travail sur le dérushage, la sélection d’archives, le montage, le motion design et les différentes versions soumises à validation.",
+        tools: "Outils : Adobe Premiere Pro · Adobe After Effects"
+      },
+      medailles: {
+        category: "Graphisme · Communication",
+        title: "Les médaillés de l’année 2025",
+        image: "https://images.unsplash.com/photo-1530549387789-4c1017266635?auto=format&fit=crop&w=1200&q=85",
+        alt: "Ambiance de compétition sportive",
+        description: "Création d’une série d’environ 70 portraits destinés à valoriser les athlètes médaillés de l’année. L’objectif : conserver une identité graphique cohérente tout en mettant chaque sportif à l’honneur.",
+        tools: "Outils : Adobe Photoshop · Adobe Illustrator · Canva"
+      },
+      reportage: {
+        category: "Audiovisuel · Interview",
+        title: "Reportage & interviews",
+        image: "https://images.unsplash.com/photo-1492619375914-88005aa9e8fb?auto=format&fit=crop&w=1200&q=85",
+        alt: "Caméra de tournage vidéo",
+        description: "Montage de séquences d’interviews et de reportage : sélection des passages, construction narrative et travail du rythme pour garder l’essentiel des témoignages sans dénaturer le propos.",
+        tools: "Outils : Adobe Premiere Pro · Adobe After Effects"
+      },
+      handikayak: {
+        category: "Communication · Accessibilité",
+        title: "Communication Handikayak",
+        image: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=85",
+        alt: "Paysage de plein air",
+        description: "Conception de kakémonos et de supports de communication pour présenter différentes dimensions du Handikayak, avec des messages adaptés aux publics visés.",
+        tools: "Outils : Adobe Illustrator · Adobe Photoshop"
+      },
+      wordpress: {
+        category: "Web · Communication digitale",
+        title: "Contenus web FFCK",
+        image: "https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?auto=format&fit=crop&w=1200&q=85",
+        alt: "Interface web sur ordinateur",
+        description: "Création et actualisation de pages WordPress sur différentes pratiques et thématiques fédérales, en veillant à organiser l’information et à la rendre accessible.",
+        tools: "Outil : WordPress"
+      },
+      motion: {
+        category: "Motion design · Identité",
+        title: "Animations graphiques",
+        image: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=1200&q=85",
+        alt: "Univers graphique et numérique",
+        description: "Création d’animations de logos et d’éléments graphiques pour apporter du mouvement et renforcer l’identité visuelle de contenus audiovisuels.",
+        tools: "Outils : Adobe After Effects · Adobe Illustrator"
+      }
+    };
+
+    const modal = document.getElementById("projectModal");
+    const modalClose = document.getElementById("modalClose");
+    document.querySelectorAll(".project-open-trigger").forEach(link => {
+      link.addEventListener("click", event => {
+        event.preventDefault();
+        const project = projects[link.dataset.project];
+        if (!project) return;
+        document.getElementById("modalImage").src = project.image;
+        document.getElementById("modalImage").alt = project.alt;
+        document.getElementById("modalCategory").textContent = project.category;
+        document.getElementById("modalTitle").textContent = project.title;
+        document.getElementById("modalDescription").textContent = project.description;
+        document.getElementById("modalTools").textContent = project.tools;
+        modal.classList.add("open");
+        document.body.style.overflow = "hidden";
+        modalClose.focus();
+      });
+    });
+    function closeModal() {
+      modal.classList.remove("open");
+      document.body.style.overflow = "";
+    }
+    modalClose.addEventListener("click", closeModal);
+    modal.addEventListener("click", event => { if (event.target === modal) closeModal(); });
+    document.addEventListener("keydown", event => { if (event.key === "Escape") closeModal(); });
+
+    // FORMULAIRE : prépare un e-mail dans l'application de messagerie du visiteur.
+    document.getElementById("contactForm").addEventListener("submit", event => {
+      event.preventDefault();
+      const name = document.getElementById("name").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const message = document.getElementById("message").value.trim();
+      const recipient = "ton.adresse@email.com"; // À remplacer par ta vraie adresse.
+      const subject = encodeURIComponent("Contact portfolio — " + name);
+      const body = encodeURIComponent("Nom : " + name + "\nE-mail : " + email + "\n\n" + message);
+      document.getElementById("formNote").textContent = "Ton application e-mail va s’ouvrir. Pense à remplacer l’adresse de destination dans le code.";
+      window.location.href = "mailto:" + recipient + "?subject=" + subject + "&body=" + body;
+    });
+
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
